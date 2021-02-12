@@ -14,13 +14,30 @@ app.set('view engine', 'handlebars');
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-app.get('/', (req, res) => {
-    res.render('index', {
-        burgers: burgers
-    });
+
+app.get('/', async (req, res) => {
+  let allBurgers = await orm.getAll();
+  let burgerNames = allBurgers.map(burgerObject => {
+    // Replace space with _ in burger name for URL purposes.
+    let burgerURL = "/" + burgerObject.burger.replace(' ', '_');
+    return {
+      burger: burgerObject.burger,
+      url: burgerURL
+    };
+  });
+
+  res.render('index', {
+    burgers: burgerNames
+  });
 });
 
-orm.addBurger("Double-Double");
+// I'm too lazy to set up a proper DELETE request in index.handlebars.
+// Besides this is html's fault for not supporting DELETE in forms.
+app.get('/:burgerURL', async (req, res) => {
+  let burgerName = req.params.burgerURL.replace('_', ' ');
+  let response = await orm.devour(burgerName);
+  res.redirect('/');
+})
 
 
 app.listen(PORT, () =>
