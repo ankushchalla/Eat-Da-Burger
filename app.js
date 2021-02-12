@@ -35,8 +35,15 @@ app.get('/', async (req, res) => {
 // Besides this is html's fault for not supporting DELETE in forms.
 app.get('/:burgerURL', async (req, res) => {
   let burgerName = req.params.burgerURL.replace('_', ' ');
-  let response = await orm.devour(burgerName);
+  await orm.devour(burgerName);
   res.redirect('/');
+})
+
+// Adding a burger.
+app.post('/', async (req, res) => {
+  let newBurger = req.body.task;
+  await orm.addBurger(newBurger);
+  res.redirect('/')
 })
 
 
