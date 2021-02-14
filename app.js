@@ -16,32 +16,38 @@ app.use(express.json());
 
 
 app.get('/', async (req, res) => {
-  let allBurgers = await orm.getAll();
-  let burgerNames = allBurgers.map(burgerObject => {
+  let nonDevoured = await orm.getAllDevoured(false);
+  let devoured = await orm.getAllDevoured(true);
+  let burgerNames = nonDevoured.map(burgerObject => {
     // Replace space with _ in burger name for URL purposes.
-    let burgerURL = "/" + burgerObject.burger.replace(' ', '_');
+    let burgerURL = "/devour/" + burgerObject.burger.replace(' ', '_');
     return {
       burger: burgerObject.burger,
       url: burgerURL
     };
   });
+  let devouredNames = devoured.map(burgerObject => {
+    return {
+      burger: burgerObject.burger
+    }
+  })
 
   res.render('index', {
-    burgers: burgerNames
+    burgers: burgerNames,
+    devouredBurgers: devouredNames
   });
 });
 
-// I'm too lazy to set up a proper DELETE request in index.handlebars.
-// Besides this is html's fault for not supporting DELETE in forms.
-app.get('/:burgerURL', async (req, res) => {
+// Devour route.
+app.get('/devour/:burgerURL', async (req, res) => {
   let burgerName = req.params.burgerURL.replace('_', ' ');
   await orm.devour(burgerName);
   res.redirect('/');
 })
 
 // Adding a burger.
-app.post('/', async (req, res) => {
-  let newBurger = req.body.task;
+app.post('/add', async (req, res) => {
+  let newBurger = req.body.add_burger;
   await orm.addBurger(newBurger);
   res.redirect('/')
 })

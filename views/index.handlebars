@@ -1,5 +1,6 @@
 <h1>Eat-Da-Burger!</h1>
 
+<h2>Waiting area</h2>
 <ul>
 	{{#each burgers}}
 	<li>
@@ -12,8 +13,17 @@
 	{{/each}}
 </ul>
 
-<form name="add_burger" action="/" method="POST">
-	<input type="text" id="new_burger">
+<h2>Devoured</h2>
+<ul>
+	{{#each devouredBurgers}}
+	<li>
+		<p>{{burger}}</p>
+	</li>
+	{{/each}}
+</ul>
+
+<form name="add_burger" action="/add" method="POST">
+	<input type="text" name="add_burger">
 
 	<button type="submit">Add burger</button>
 </form>
