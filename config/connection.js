@@ -3,7 +3,6 @@ let connection;
 
 if (process.env.JAWSDB_URL) {
   connection = mysql.createConnection(process.env.JAWSDB_URL);
-  console.log("connection details:", connection);
 }
 else {
   connection = mysql.createConnection({
@@ -15,14 +14,6 @@ else {
     database: 'burgers_db',
   });
 }
-connection = mysql.createConnection({
-  host: 'localhost',
-  port: 3306,
-  user: 'root',
-  // NOTE: Be sure to add your MySQL password here!
-  password: 'Ouim@te1',
-  database: 'burgers_db',
-});
 
 connection.connect((err) => {
   if (err) {
