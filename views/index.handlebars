@@ -1,26 +1,31 @@
 <h1>Eat-Da-Burger!</h1>
 
-<h2>Waiting area</h2>
-<ul>
-	{{#each burgers}}
-	<li>
-		<p>{{burger}}</p>
-		<form action={{url}} method="GET">
-			<button>Devour it!</button>
-		</form>
+<div id="waiting-area">
+	<h2>Waiting area</h2>
+	<ul>
+		{{#each burgers}}
+		<li>
+			<p>{{burger}}</p>
+			<form action={{url}} method="GET">
+				<button>Devour it!</button>
+			</form>
 
-	</li>
-	{{/each}}
-</ul>
+		</li>
+		{{/each}}
+	</ul>
+</div>
 
-<h2>Devoured</h2>
-<ul>
-	{{#each devouredBurgers}}
-	<li>
-		<p>{{burger}}</p>
-	</li>
-	{{/each}}
-</ul>
+<div id="devoured">
+	<h2>Devoured</h2>
+	<ul>
+		{{#each devouredBurgers}}
+		<li>
+			<p>{{burger}}</p>
+		</li>
+		{{/each}}
+	</ul>
+
+</div>
 
 <form name="add_burger" action="/add" method="POST">
 	<input type="text" name="add_burger">

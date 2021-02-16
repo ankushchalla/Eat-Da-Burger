@@ -11,3 +11,4 @@ CREATE TABLE burgers (
 INSERT INTO burgers (burger) VALUES
 ("Double-Double"), ("Bacon Cheesburger"), ("Blackbean");
 
+UPDATE burgers SET devoured=true WHERE id=1;
